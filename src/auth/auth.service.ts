@@ -31,4 +31,4 @@ export class AuthService {
   async validateUser(id: number) {
     return this.repo.findOneBy({ id });
   }
-}}
+}

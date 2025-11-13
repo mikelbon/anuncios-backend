@@ -20,7 +20,7 @@ export class Ad {
   @Column()
   category: 'departamento' | 'cochera' | 'servicio' | 'articulo';
 
-  @Column()
+  @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;
 
   @Column()

@@ -9,7 +9,9 @@ export class AdService {
   constructor(@InjectRepository(Ad) private repo: Repository<Ad>) {}
 
   create(ad: Partial<Ad>) {
-    return this.repo.save(ad);
+    const now = new Date();
+    const expiresAt = ad.expiresAt ?? addMonths(now, 1); // 1 mes por defecto
+    return this.repo.save({ ...ad, createdAt: now, expiresAt });
   }
 
   findAll() {
@@ -27,10 +29,4 @@ export class AdService {
   remove(id: number) {
     return this.repo.delete(id);
   }
-
-  create(ad: Partial<Ad>) {
-  const now = new Date();
-  const expiresAt = ad.expiresAt ?? addMonths(now, 1); // 1 mes por defecto
-  return this.repo.save({ ...ad, createdAt: now, expiresAt });
-}
 }
