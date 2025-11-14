@@ -6,6 +6,13 @@ import {
   CreateDateColumn,
 } from 'typeorm';
 
+export enum AdCategory {
+  DEPARTAMENTO = 'departamento',
+  COCHERA = 'cochera',
+  SERVICIO = 'servicio',
+  ARTICULO = 'articulo',
+}
+
 @Entity()
 export class Ad {
   @PrimaryGeneratedColumn()

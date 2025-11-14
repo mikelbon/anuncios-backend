@@ -5,14 +5,15 @@ import { AuthService } from './auth.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(private authService: AuthService) {
+  constructor() {
     super({
       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      secretOrKey: 'tu_clave_secreta',
+      ignoreExpiration: false,
+      secretOrKey: 'superSecretKey',
     });
   }
 
   async validate(payload: any) {
-    return this.authService.validateUser(payload.sub);
+    return { userId: payload.sub, email: payload.email };
   }
 }

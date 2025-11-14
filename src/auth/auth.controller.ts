@@ -3,15 +3,19 @@ import { AuthService } from './auth.service';
 
 @Controller('auth')
 export class AuthController {
-  constructor(private readonly service: AuthService) {}
+  constructor(private readonly authService: AuthService) {}
 
   @Post('register')
   register(@Body() body) {
-    return this.service.register(body);
+    return this.authService.register(body);
   }
 
   @Post('login')
-  login(@Body() body) {
-    return this.service.login(body);
+  async login(@Body() body:{ email: string; password: string }) {
+    const user = await this.authService.validateUser(body.email, body.password);
+    if (!user) {
+      return { message: 'Credenciales inválidas' };
+    }
+    return this.authService.login(user);
   }
 }
