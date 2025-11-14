@@ -5,6 +5,7 @@ import { User } from '../entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/list-user.dto';
 import * as bcrypt from 'bcrypt';
+import { UserRole } from '../entities/user.entity';
 
 @Injectable()
 export class UserService {
@@ -18,6 +19,7 @@ export class UserService {
       const user = this.repo.create({
     ...dto,
     password: hashedPassword,
+    role: dto.role || UserRole.USER,
   });
   return this.repo.save(user);
   }
