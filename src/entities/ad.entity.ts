@@ -24,8 +24,11 @@ export class Ad {
   @Column()
   description: string;
 
-  @Column()
-  category: 'departamento' | 'cochera' | 'servicio' | 'articulo';
+  @Column({
+    type: 'enum',
+    enum: AdCategory,
+  })
+  category: AdCategory;
 
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   price: number;

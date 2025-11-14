@@ -1,10 +1,11 @@
 import {
   IsString,
   IsNumber,
-  IsIn,
+  IsEnum,
   IsOptional,
   IsDateString,
 } from 'class-validator';
+import { AdCategory } from '../../entities/ad.entity'; 
 
 export class CreateAdDto {
   @IsString()
@@ -13,8 +14,8 @@ export class CreateAdDto {
   @IsString()
   description: string;
 
-  @IsIn(['departamento', 'cochera', 'servicio', 'articulo'])
-  category: string;
+  @IsEnum(AdCategory)
+  category: AdCategory;
 
   @IsNumber()
   price: number;
@@ -24,5 +25,5 @@ export class CreateAdDto {
 
   @IsOptional()
   @IsDateString()
-  expiresAt?: string;
+  expiresAt?: Date;
 }
