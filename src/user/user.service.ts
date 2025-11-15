@@ -16,19 +16,19 @@ export class UserService {
 
   async create(dto: CreateUserDto): Promise<User> {
     const hashedPassword = await bcrypt.hash(dto.password, 10);
-      const user = this.repo.create({
-    ...dto,
-    password: hashedPassword,
-    role: dto.role || UserRole.USER,
-  });
-  return this.repo.save(user);
+    const user = this.repo.create({
+      ...dto,
+      password: hashedPassword,
+      role: dto.role || UserRole.USER,
+    });
+    return this.repo.save(user);
   }
 
   async findAll(): Promise<UserResponseDto[]> {
     const users = await this.repo.find();
     return users.map((user) => {
-      const { id, name, email } = user;
-      return { id, name, email };
+      const { id, name, email, role } = user;
+      return { id, name, email, role };
     });
   }
 
@@ -37,5 +37,8 @@ export class UserService {
       where: { email },
       select: ['id', 'email', 'password', 'name'],
     });
+  }
+  async remove(id: number): Promise<void> {
+    await this.repo.delete(id);
   }
 }
