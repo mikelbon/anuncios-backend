@@ -49,10 +49,6 @@ export class UserController {
 
   @Get(':id/ads')
   async findAdsByUser(@Param('id') id: number) {
-    const user = await this.service.findAdsByUser(+id);
-    if (!user) {
-      return { message: 'Usuario no encontrado' };
-    }
-    return user.ads;
+    return await this.service.findAdsByUser(+id);
   }
 }

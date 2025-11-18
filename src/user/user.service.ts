@@ -2,16 +2,18 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { User } from '../entities/user.entity';
+import { Ad } from '../entities/ad.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { UserResponseDto } from './dto/list-user.dto';
 import * as bcrypt from 'bcrypt';
 import { UserRole } from '../entities/user.entity';
+import { NotFoundException } from '@nestjs/common';
 
 @Injectable()
 export class UserService {
   constructor(
-    @InjectRepository(User)
-    private readonly userRepo: Repository<User>,
+    @InjectRepository(User) private readonly userRepo: Repository<User>,
+    @InjectRepository(Ad) private adRepo: Repository<Ad>,
   ) {}
 
   async create(dto: CreateUserDto): Promise<User> {
@@ -52,9 +54,18 @@ export class UserService {
   }
 
   async findAdsByUser(id: number) {
-    return this.userRepo.findOne({
-      where: { id },
-      relations: ['ads'],
+    return this.adRepo.find({
+      where: { user: { id } },
+      select: [
+        'id',
+        'title',
+        'description',
+        'category',
+        'price',
+        'contact',
+        'createdAt',
+        'expiresAt',
+      ],
     });
   }
 }

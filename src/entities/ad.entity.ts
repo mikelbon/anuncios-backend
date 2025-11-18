@@ -45,7 +45,7 @@ export class Ad {
   @Column({ type: 'timestamp' })
   expiresAt: Date;
 
-  @ManyToOne(() => User, (user) => user.ads, { eager: true, onDelete: 'CASCADE' })
+  @ManyToOne(() => User, (user) => user.ads, { onDelete: 'CASCADE' })
   @JoinColumn({ name: 'userId' })
   user: User;
 }
