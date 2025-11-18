@@ -38,12 +38,21 @@ export class UserController {
   }
 
   @Put(':id')
-  async update(@Param('id') id:number, @Body() body: Partial<CreateUserDto>){
+  async update(@Param('id') id: number, @Body() body: Partial<CreateUserDto>) {
     return this.service.update(id, body);
   }
 
   @Delete(':id')
   async remove(@Param('id') id: number) {
     return this.service.remove(id);
+  }
+
+  @Get(':id/ads')
+  async findAdsByUser(@Param('id') id: number) {
+    const user = await this.service.findAdsByUser(+id);
+    if (!user) {
+      return { message: 'Usuario no encontrado' };
+    }
+    return user.ads;
   }
 }
