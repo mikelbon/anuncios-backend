@@ -26,4 +26,5 @@ export class CreateAdDto {
   @IsOptional()
   @IsDateString()
   expiresAt?: Date;
+  userId: number
 }

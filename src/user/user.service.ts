@@ -32,11 +32,19 @@ export class UserService {
     });
   }
 
+  async findOne(id:number){
+    return this.repo.findOneBy({id});
+  }
+
   async findByEmailWithPassword(email: string): Promise<User | null> {
     return this.repo.findOne({
       where: { email },
       select: ['id', 'email', 'password', 'name'],
     });
+  }
+
+  async update(id: number, data: Partial<CreateUserDto>){
+    return this.repo.update(id, data);
   }
   async remove(id: number): Promise<void> {
     await this.repo.delete(id);

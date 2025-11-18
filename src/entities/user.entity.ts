@@ -3,7 +3,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  OneToMany
 } from 'typeorm';
+
+import { Ad } from './ad.entity';
 
 export enum UserRole {
   USER = 'user',
@@ -33,4 +36,7 @@ export class User {
 
   @CreateDateColumn()
   createdAt: Date;
+
+  @OneToMany(()=> Ad, (ad) => ad.user)
+  ads: Ad[];
 }

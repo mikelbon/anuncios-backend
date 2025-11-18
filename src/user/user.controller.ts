@@ -3,6 +3,7 @@ import {
   Body,
   Post,
   Get,
+  Put,
   Delete,
   Param,
   UseGuards,
@@ -27,6 +28,18 @@ export class UserController {
   @Get()
   async findAll() {
     return this.service.findAll();
+  }
+
+  @UseGuards(JwtAuthGuard, RolesGuard)
+  @Roles('admin')
+  @Get(':id')
+  async findOne(@Param('id') id: number) {
+    return this.service.findOne(id);
+  }
+
+  @Put(':id')
+  async update(@Param('id') id:number, @Body() body: Partial<CreateUserDto>){
+    return this.service.update(id, body);
   }
 
   @Delete(':id')

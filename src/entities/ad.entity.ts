@@ -4,7 +4,10 @@ import {
   PrimaryGeneratedColumn,
   Column,
   CreateDateColumn,
+  ManyToOne,
+  JoinColumn,
 } from 'typeorm';
+import { User } from './user.entity';
 
 export enum AdCategory {
   DEPARTAMENTO = 'departamento',
@@ -41,4 +44,8 @@ export class Ad {
 
   @Column({ type: 'timestamp' })
   expiresAt: Date;
+
+  @ManyToOne(() => User, (user) => user.ads, { eager: true, onDelete: 'CASCADE' })
+  @JoinColumn({ name: 'userId' })
+  user: User;
 }

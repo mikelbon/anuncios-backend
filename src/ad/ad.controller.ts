@@ -12,6 +12,8 @@ import { addMonths } from 'date-fns';
 import { AdService } from './ad.service';
 import { UseGuards } from '@nestjs/common';
 import { AuthGuard } from '@nestjs/passport';
+import {  UpdateAdDto} from './dto/update-ad.dto';
+import { CreateAdDto } from './dto/create-ad.dto';
 
 @Controller('ads')
 export class AdController {
@@ -19,8 +21,8 @@ export class AdController {
 
   @UseGuards(AuthGuard('jwt'))
   @Post()
-  create(@Body() ad, @Request() req) {
-    return this.service.create(ad);
+  create(@Body() dto: CreateAdDto, @Request() req) {
+    return this.service.create(dto);
   }
 
   @Get()
@@ -34,8 +36,8 @@ export class AdController {
   }
 
   @Put(':id')
-  update(@Param('id') id: number, @Body() ad) {
-    return this.service.update(id, ad);
+  update(@Param('id') id: number, @Body() dto: UpdateAdDto) {
+    return this.service.update(id, dto);
   }
 
   @Delete(':id')
